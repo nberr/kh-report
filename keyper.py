@@ -5,6 +5,7 @@
 # Start Date: 21 August 2020                                                              #
 # Changes: added comments - 24 August 2020                                                #
 #          added automation for logging in and generating reports - 24 August 2020        #
+#          added better file management/cleanup - 26 August 2020                          #
 ###########################################################################################
 import getpass
 import pandas as pd
