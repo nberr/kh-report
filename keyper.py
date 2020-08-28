@@ -65,17 +65,21 @@ driver.get('https://www.homenetiol.com/inventory/browse-vehicles/list?filter={Vi
 homenet_export = driver.find_element_by_id('ctl00_ctl00_ContentPlaceHolder_ContentPlaceHolder_ctl00_HeaderButtons_ExportToExcelActionButton')
 homenet_export.click()
 
+
+# generate the file name for the homenet report
+date = datetime.now().strftime('%-m-%d-%Y')
+homenet_file = 'InventoryReport-' + date + '.xls'
+
 # wait to finish the download
-time.sleep(5)
+# check to see if the files is done downloading
+while not os.path.exists('../Downloads/' + homenet_file):
+   time.sleep(1)
 
 # close the web browser
 driver.quit()
 
 # pull the necessary data from the files
-
 # homenet file
-date = datetime.now().strftime('%-m-%d-%Y')
-homenet_file = 'InventoryReport-' + date + '.xls'
 homenet_list = pd.read_html('../Downloads/' + homenet_file)[0]['Stock'].tolist()
 # print(homenet_list)
 os.remove('../Downloads/' + homenet_file)
@@ -100,3 +104,6 @@ keyper_list.sort()
 output = open('../Desktop/output.txt', 'w+')
 output.write('\n'.join(keyper_list))
 output.close()
+
+# open the file for the user
+os.system('notepad.exe ../Desktop/output.txt')
